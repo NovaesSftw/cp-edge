@@ -1,0 +1,61 @@
+// Pinos
+const int ldrPin = A0;
+
+const int ledVerde = 8;
+const int ledAmarelo = 9;
+const int ledVermelho = 10;
+
+const int buzzer = 11;
+
+// Variáveis
+int valorLuz = 0;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(ledVerde, OUTPUT);
+  pinMode(ledAmarelo, OUTPUT);
+  pinMode(ledVermelho, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop() {
+  // Leitura do LDR
+  valorLuz = analogRead(ldrPin);
+
+  // Mostra no Serial (ajuda na calibração)
+  Serial.print("Luminosidade: ");
+  Serial.println(valorLuz);
+
+  // Desliga tudo antes de decidir
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAmarelo, LOW);
+  digitalWrite(ledVermelho, LOW);
+
+  // --- Lógica dos níveis ---
+
+  // 🟢 OK (ambiente escuro)
+  if (valorLuz <= 300) {
+    digitalWrite(ledVerde, HIGH);
+  }
+
+  // 🟡 ALERTA
+  else if (valorLuz > 300 && valorLuz <= 700) {
+    digitalWrite(ledAmarelo, HIGH);
+  }
+
+  // 🔴 CRÍTICO (muita luz)
+  else {
+    digitalWrite(ledVermelho, HIGH);
+
+    // Ativa buzzer por 3 segundos
+    tone(buzzer, 1000); // som
+    delay(3000);
+    noTone(buzzer);
+
+    // Pequena pausa antes de verificar novamente
+    delay(500);
+  }
+
+  delay(500); // tempo de leitura
+}
