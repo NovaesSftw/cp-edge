@@ -30,3 +30,4 @@ Paulo Ricardo Siqueira de Carlos - RM 569992
 Heitor Ortiz Nogueira - RM 569762
 Enzo Biagiotti - RM 568894
 Leonardo Novaes - RM 570991
+Rafael De Sousa -RM 568777
